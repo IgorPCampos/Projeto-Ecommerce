@@ -2,23 +2,23 @@ import { useState, useEffect } from 'react';
 import { api } from './api';
 
 export default function showInformations() {
-    const [categorias, setCategorias] = useState<any[]>([]);
+    const [categories, setcategories] = useState<any[]>([]);
 
-    async function carregarCategorias() {
+    async function loadCategories() {
         try {
-            const categoria = await api.get('/category');
-            setCategorias(categoria.data);
+            const categoria = await api.get('/categories');
+            setcategories(categoria.data);
 
         } catch (error) {
-            console.error('Erro ao buscar categorias:', error);
+            console.error('Erro ao buscar categories:', error);
         }
     }
-    const [produtos, setProdutos] = useState<any[]>([]);
+    const [products, setproducts] = useState<any[]>([]);
 
-    async function carregarProdutos() {
+    async function loadProducts() {
         try {
-            const respProd = await api.get('/product');
-            setProdutos(respProd.data);
+            const respProd = await api.get('/products');
+            setproducts(respProd.data);
 
 
         } catch (error) {
@@ -27,9 +27,9 @@ export default function showInformations() {
     }
 
     useEffect(() => {
-        carregarCategorias();
-        carregarProdutos();
+        loadCategories();
+        loadProducts();
     }, []);
 
-    return { produtos, categorias, carregarProdutos, carregarCategorias };
+    return { products, categories, loadProducts, loadCategories };
 }

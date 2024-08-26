@@ -1,17 +1,17 @@
-import Titulo from "./Titulo";
 import Avatar from "./Avatar";
-import Search from "./Busca";
+import Search from "./Search";
 import React from "react";
+import Title from "./Title";
 
-interface CabecalhoProps {
-    titulo: string;
-    subtitulo: string;
+interface HeaderProps {
+    title: string;
+    subTitle: string;
 }
 
-export default function Cabecalho(props: CabecalhoProps) {
+export default function Header(props: HeaderProps) {
     return (
         <div className="flex items-center justify-between">
-            <Titulo titulo={props.titulo} subtitulo={props.subtitulo} />
+            <Title title={props.title} subTitle={props.subTitle} />
             <div className="flex items-center justify-center flex-grow"> 
                 <Search />
             </div>

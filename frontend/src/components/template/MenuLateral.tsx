@@ -20,6 +20,7 @@ export default function MenuLateral() {
                 <MenuItem url="/" texto="Inicio" icone={Home} />
                 <MenuItem url="/produto" texto="Produto" icone={Configuracoes} />
                 <MenuItem url="/categoria" texto="Categoria" icone={Sino} />
+                <MenuItem url="/pedido" texto="Pedido" icone={Sino} />
             </ul>
             <ul>
                 <MenuItem onClick={logout} texto="Sair" icone={Sair} className={'text-red-600 hover:bg-red-500 hover:text-white'} />

@@ -5,21 +5,21 @@ interface ProductDetailProps {
 }
 
 function ProductDetail(props: ProductDetailProps) {
-  const { produtos, carregarProdutos } = showInformations();
+  const { products, loadProducts } = showInformations();
   
-  carregarProdutos();
+  loadProducts();
 
   return (
     
     <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
-      {produtos
-        .filter((produto) => produto.id === props.productId)
-        .map((produto) => (
-          <div key={produto.id}>
+      {products
+        .filter((product) => product.id === props.productId)
+        .map((product) => (
+          <div key={product.id}>
             <div className="px-6 py-4">
-              <div className="font-bold text-xl mb-2">{produto.name}</div>
-              <p className="text-gray-700 text-base">{produto.description}</p>
-              <p className="text-gray-700">Preço: ${produto.price}</p>
+              <div className="font-bold text-xl mb-2">{product.name}</div>
+              <p className="text-gray-700 text-base">{product.description}</p>
+              <p className="text-gray-700">Preço: ${product.price}</p>
             </div>
           </div>
         ))}

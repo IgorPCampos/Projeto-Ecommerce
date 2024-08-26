@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Mais, Lixo } from "@/components/icons";
-import showInformation from "../../lib/showInformations";
+import showInformation from "../../../lib/showInformations";
 
-export default function SelectCategorias() {
-  const { categorias } = showInformation();
+export default function Selectcategories() {
+  const { categories } = showInformation();
   const [categorySelections, setCategorySelections] = useState(1);
 
   const addCategorySelection = () => {
@@ -29,7 +29,7 @@ export default function SelectCategorias() {
             id={`categoryId`}
             className="rounded border-gray-400 bg-gray-600 text-white"
           >
-            {categorias.map((categoria) => (
+            {categories.map((categoria) => (
               <option key={categoria.id} value={categoria.id}>
                 {categoria.name}
               </option>

@@ -1,12 +1,12 @@
-import Cabecalho from "./Cabecalho"
-import Conteudo from "./Conteudo"
+import Header from "./Header"
+import Content from "./Content"
 import MenuLateral from "./MenuLateral"
 import Message from "./Message"
 // import ProtegerRotas from '../auth/ProtegerRotas'
 
 interface LayoutProps {
-    titulo: string
-    subtitulo: string
+    title: string
+    subtitle: string
     children?: any
 }
 
@@ -17,11 +17,11 @@ export default function Layout(props: LayoutProps) {
             <div className={`flex flex-row h-screen`}>
                 <MenuLateral />
                 <div className="flex-grow overflow-y-auto flex flex-col w-full p-7 bg-gray-300 ">
-                    <Cabecalho titulo={props.titulo} subtitulo={props.subtitulo} />
+                    <Header title={props.title} subTitle={props.subtitle} />
                     <Message/>
-                    <Conteudo >
+                    <Content >
                         {props.children}
-                    </Conteudo>
+                    </Content>
                 </div>
             </div>
 

@@ -1,12 +1,12 @@
 import { FormEvent } from "react";
 import { api } from "@/lib/api";
 import useFlashMessage from '../../../lib/useFlashMessage'
-import BotaoCriar from "../BotaoCriar";
+import CreateButton from "../CreateButton";
 import Input from "../Input";
 import showInformation from '../../../lib/showInformations'
 
 export default function CreateNewCategory() {
-    const { categorias, carregarCategorias } = showInformation();
+    const { categories, loadCategories } = showInformation();
     const { setFlashMessage } = useFlashMessage()
 
     async function handleCreateCategory(event: FormEvent<HTMLFormElement>) {
@@ -16,7 +16,7 @@ export default function CreateNewCategory() {
 
         let msgType = 'success'
 
-        const data = await api.post('/category', {
+        const data = await api.post('/categories', {
             name: formData.get('name'),
         }).then((response) => {
             return response.data
@@ -32,7 +32,7 @@ export default function CreateNewCategory() {
             const parsedData = JSON.parse(data.message)
             setFlashMessage(parsedData[0]?.message, msgType)
         }
-        carregarCategorias()
+        loadCategories()
     }
 
     return (
@@ -44,7 +44,7 @@ export default function CreateNewCategory() {
                         <Input type="text" name="name" id="name" />
                     </label>
                 </div>
-                <BotaoCriar type="submit" texto="Criar" />
+                <CreateButton type="submit" texto="Criar" />
             </form>
             
             <div className="overflow-x-hidden">
@@ -55,10 +55,10 @@ export default function CreateNewCategory() {
                         </tr>
                     </thead>
                     <tbody>
-                        {categorias.map((categoria, index) => (
+                        {categories.map((category, index) => (
                             <tr key={index} className={(index % 2 === 0) ? "bg-gray-50 dark:bg-gray-100 dark:text-black" : ""}>
                                 <td className="py-2 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis max-w-sm">
-                                    {categoria.name}
+                                    {category.name}
                                 </td>
                             </tr>
                         ))}

@@ -4,7 +4,7 @@ import { CreateNewProduct } from "@/components/template/Product/CreateNewProduct
 
 export default function Produto() {
   return (
-    <Layout titulo="Produtos" subtitulo="Veja seus produtos">
+    <Layout title="Produtos" subtitle="Veja seus produtos">
       <CreateNewProduct />
     </Layout>
   );

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import ShowProducts from '@/components/template/Product/ShowProducts';
-import Search from '@/components/template/Busca';
+import Search from '@/components/template/Search';
 import Avatar from '@/components/template/Avatar';
 import Logo from '@/components/template/Logo';
 

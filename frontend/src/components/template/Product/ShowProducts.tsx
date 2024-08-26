@@ -7,35 +7,32 @@ interface ShowProductsProps {
 }
 
 export default function ShowProducts(props: ShowProductsProps) {
-    const { produtos, categorias, carregarProdutos, carregarCategorias } = showInformations();
+    const { products, categories, loadProducts, loadCategories } = showInformations();
 
-    const [categoryFilters, setCategoryFilters] = useState<number[]>([]); // Use an array to store selected category IDs
+    const [categoryFilters, setCategoryFilters] = useState<number[]>([]); 
     const [priceFilter, setPriceFilter] = useState<number | null>(null);
 
     useEffect(() => {
-        carregarCategorias();
-        carregarProdutos();
+        loadCategories();
+        loadProducts();
     }, []);
 
     const handleCategoryCheckboxChange = (categoryId: number) => {
         if (categoryFilters.includes(categoryId)) {
-            // Remove the category ID from the array if it's already selected
             setCategoryFilters(categoryFilters.filter((id) => id !== categoryId));
         } else {
-            // Add the category ID to the array if it's not selected
             setCategoryFilters([...categoryFilters, categoryId]);
         }
     };
 
-    const filteredProducts = produtos
+    const filteredProducts = products
         .filter((produto) =>
             produto.name.toLowerCase().includes(props.productName.toLowerCase()) &&
             (categoryFilters.length === 0 || produto.categories.some((category: { id: number }) => categoryFilters.includes(category.id))) &&
             (!priceFilter || produto.price <= priceFilter)
         );
 
-    // Criar um conjunto de categorias com base nos produtos filtrados
-    const filteredCategories = categorias.filter((categoria) =>
+    const filteredCategories = categories.filter((categoria) =>
         filteredProducts.some((produto) => produto.categories.some((category: { id: number }) => category.id === categoria.id))
     );
 
