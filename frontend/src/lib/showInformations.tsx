@@ -1,35 +1,44 @@
-import { useState, useEffect } from 'react';
-import { api } from './api';
+import { useState, useEffect } from "react";
+import { api } from "./api";
 
 export default function showInformations() {
-    const [categories, setcategories] = useState<any[]>([]);
+  const [categories, setcategories] = useState<any[]>([]);
 
-    async function loadCategories() {
-        try {
-            const categoria = await api.get('/categories');
-            setcategories(categoria.data);
-
-        } catch (error) {
-            console.error('Erro ao buscar categories:', error);
-        }
+  async function loadCategories() {
+    try {
+      const categoria = await api.get("/categories");
+      setcategories(categoria.data);
+    } catch (error) {
+      console.error("Erro ao buscar categories:", error);
     }
-    const [products, setproducts] = useState<any[]>([]);
+  }
+  const [products, setproducts] = useState<any[]>([]);
 
-    async function loadProducts() {
-        try {
-            const respProd = await api.get('/products');
-            setproducts(respProd.data);
-
-
-        } catch (error) {
-            console.log(error);
-        }
+  async function loadProducts() {
+    try {
+      const respProd = await api.get("/products");
+      setproducts(respProd.data);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    useEffect(() => {
-        loadCategories();
-        loadProducts();
-    }, []);
+  const [orders, setorders] = useState<any[]>([]);
 
-    return { products, categories, loadProducts, loadCategories };
+  async function loadOrders() {
+    try {
+      const respProd = await api.get("/orders");
+      setorders(respProd.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    loadCategories();
+    loadProducts();
+    loadOrders();
+  }, []);
+
+  return { categories, loadCategories, products, loadProducts, orders, loadOrders };
 }

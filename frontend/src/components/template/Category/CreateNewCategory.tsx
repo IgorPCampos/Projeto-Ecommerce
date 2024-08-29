@@ -26,7 +26,7 @@ export default function CreateNewCategory() {
         })
 
         if (msgType == 'success') {
-            setFlashMessage(data.message, msgType)
+            setFlashMessage("Categoria criado com sucesso!", msgType);
 
         } else {
             const parsedData = JSON.parse(data.message)
@@ -38,7 +38,7 @@ export default function CreateNewCategory() {
     return (
         <>
             <form onSubmit={handleCreateCategory} className='flex flex-1 flex-col gap-2 border-2 bg-white rounded-lg px-4 pt-6 pb-4 mb-4'>
-                <div className='flex flex-col gap-4'>
+                <div className='flex flex-col gap-3'>
                     <label htmlFor="" className='items-center gap-1.5 dark:text-gray-800 text-gray-900'>
                         Nome:
                         <Input type="text" name="name" id="name" />

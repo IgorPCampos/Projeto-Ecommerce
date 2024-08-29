@@ -3,15 +3,15 @@ import { startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 import showInformation from '../../lib/showInformations'
 
 export default function Card() {
-    const { produtos, categorias } = showInformation();
+    const { products, categories } = showInformation();
     const dataAtual = new Date();
     const dataInicioDaSemana = startOfWeek(dataAtual);
     const dataFimDaSemana = endOfWeek(dataAtual);
     
     function calcularProdutosCriadosEstaSemana() {
 
-        const produtosCriadosNaSemana = produtos.filter((produto) => {
-            const dataCriacao = new Date(produto.createdAt)
+        const produtosCriadosNaSemana = products.filter((product) => {
+            const dataCriacao = new Date(product.createdAt)
 
             const dentroDoIntervalo = isWithinInterval(dataCriacao, { start: dataInicioDaSemana, end: dataFimDaSemana });
 
@@ -23,8 +23,8 @@ export default function Card() {
 
     function calcularCategoriasCriadosEstaSemana() {
 
-        const categoriasCriadosNaSemana = categorias.filter((categoria) => {
-            const dataCriacao = new Date(categoria.createdAt)
+        const categoriasCriadosNaSemana = categories.filter((category) => {
+            const dataCriacao = new Date(category.createdAt)
 
             const dentroDoIntervalo = isWithinInterval(dataCriacao, { start: dataInicioDaSemana, end: dataFimDaSemana });
 
@@ -41,7 +41,7 @@ export default function Card() {
                     <div className="px-6 py-4">
                         <div className="font-bold text-xl mb-2">Produtos</div>
                         <p className="text-gray-700 text-base">
-                            Quantidade de produtos: {produtos.length}
+                            Quantidade de produtos: {products.length}
                         </p>
                     </div>
                     <div className="px-6 py-4">
@@ -56,7 +56,7 @@ export default function Card() {
                     <div className="px-6 py-4">
                         <div className="font-bold text-xl mb-2">Categorias</div>
                         <p className="text-gray-700 text-base">
-                            Quantidade de categorias: {categorias.length}
+                            Quantidade de categorias: {categories.length}
                         </p>
                     </div>
                     <div className="px-6 py-4">

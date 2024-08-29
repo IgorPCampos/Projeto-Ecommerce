@@ -4,43 +4,51 @@ import useFlashMessage from "../../../lib/useFlashMessage";
 import showInformation from "../../../lib/showInformations";
 import CreateButton from "../CreateButton";
 import Input from "../Input";
-import SelectProducts from "./SelectProdutcs";
+import SelectProducts from "./SelectProducts";
 
 export function CreateNewOrder() {
   const { setFlashMessage } = useFlashMessage();
-  const { products, categories, loadProducts } = showInformation();
+  const { orders, products, loadOrders } = showInformation();
 
   async function handleCreateOrder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-
     let msgType = "success";
 
-    const data = await api
-      .post("/product", {
-        name: formData.get("name"),
-        price: Number(formData.get("price")),
-        description: formData.get("description"),
-        quantity: Number(formData.get("quantity")),
-        categories: Array.from(formData.getAll("categoryId")).map(Number),
-      })
-      .then((response) => {
-        return response.data;
-      })
-      .catch((err) => {
-        msgType = "error";
+    // Log para depuração de formData
+    console.log("Form Data Entries:", Array.from(formData.entries()));
 
-        return err.response.data;
+    // Construir o array orderItems com productId e quantity
+    const orderItems = Array.from(formData.getAll("productId"))
+      .map((productId, index) => ({
+        productId: Number(productId),
+        quantity: Number(formData.getAll("quantity")[index]),
+      }))
+      .filter((item) => item.productId && item.quantity);
+
+    // Log para depuração de orderItems
+    console.log("Order Items:", orderItems);
+
+    try {
+      const response = await api.post(`/orders/3`, {
+        address: formData.get("address"),
+        paymentMethod: formData.get("paymentMethod"),
+        orderItems,
       });
-    if (msgType == "success") {
-      setFlashMessage(data.message, msgType);
-    } else {
-      const parsedData = JSON.parse(data.message);
 
-      setFlashMessage(parsedData[0]?.message, msgType);
+      setFlashMessage("Pedido criado com sucesso!", msgType);
+      loadOrders();
+    } catch (err: any) {
+      msgType = "error";
+
+      const errorMessage =
+        err.response.data?.message || "Ocorreu um erro ao criar o pedido.";
+      setFlashMessage(
+        Array.isArray(errorMessage) ? errorMessage[0] : errorMessage,
+        msgType
+      );
     }
-    loadProducts();
   }
 
   return (
@@ -49,75 +57,79 @@ export function CreateNewOrder() {
         onSubmit={handleCreateOrder}
         className="flex flex-1 flex-col gap-2 border-2 bg-slate-200 rounded-lg px-4 pt-6 pb-4 mb-4"
       >
-        <div className="flex flex-col gap-4">
-          <label htmlFor="" className="items-center gap-1.5 text-gray-900">
+        <div className="flex flex-col gap-3">
+          <label
+            htmlFor="address"
+            className="items-center gap-1.5 text-gray-900"
+          >
             Endereço:
-            <Input type="text" name="name" id="name" /> 
+            <Input type="text" name="address" id="address" required />
           </label>
-          <label htmlFor="" className="items-center gap-1.5 text-gray-900">
+          <label
+            htmlFor="paymentMethod"
+            className="items-center gap-1.5 text-gray-900"
+          >
             Método de Pagamento:
-            <Input type="number" name="price" id="price" />
-          </label>
-          <label htmlFor="" className="items-center gap-1.5 text-gray-900">
-            products:
-            <Input type="text" name="description" id="description" />
-          </label>
-          <label htmlFor="" className="items-center gap-1.5 text-gray-900">
-            Quantidade:
             <Input
-              type="number"
-              name="quantity"
-              id="quantity"
-              required={true}
+              type="text"
+              name="paymentMethod"
+              id="paymentMethod"
+              required
             />
           </label>
-          <SelectProducts/>
+
+          <SelectProducts />
         </div>
 
         <CreateButton type="submit" texto="Criar" />
       </form>
 
-      <table className=" min-w-full table-auto border border-gray-400">
+      <table className="min-w-full table-auto border border-gray-400">
         <thead>
           <tr className="bg-blue-700 dark:bg-blue-600">
-            <th className="py-2 px-2 text-left">Nome do Produto</th>
-            <th className="py-2 px-2 text-left">Preço do Produto</th>
-            <th className="py-2 px-2 text-left">Descrição do Produto</th>
-            <th className="py-2 px-2 text-left">Quantidade</th>
-            <th className="py-2 px-2 text-center">categories</th>
+            <th className="py-2 px-2 text-left">Endereço do Pedido</th>
+            <th className="py-2 px-2 text-left">Método de Pagamento</th>
+            <th className="py-2 px-2 text-left">Preço do Pedido</th>
+            <th className="py-2 px-2 text-left">Produtos</th>
+            <th className="py-2 px-2 text-center">Usuário</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((produto, index) => {
-            const categoria = categories.find(
-              (cat) => cat.id === produto.categoryId
-            );
+          {orders.map((order, index) => {
+            products.find((prod) => prod.id === order.productId);
 
             return (
               <tr
                 key={index}
                 className={
                   index % 2 === 0
-                    ? "bg-gre dark:bg-gray-300 opacity-70"
+                    ? "bg-gray-300 dark:bg-gray-300 opacity-70"
                     : "text-black"
                 }
               >
                 <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {produto.name}
+                  {order.address}
                 </td>
                 <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {produto.price}
+                  {order.paymentMethod}
                 </td>
                 <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {produto.description}
-                </td>
+                  {order.total}
+                </td>   
                 <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {produto.quantity}
-                </td>
-                <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {produto.categories
-                    .map((categoria: any) => categoria.name)
+                  {order.orderItems
+                    .map((product: any) => {
+                      const foundProduct = products.find(
+                        (prod) => prod.id === product.productId
+                      );
+                      return foundProduct
+                        ? foundProduct.name
+                        : "Produto desconhecido";
+                    })
                     .join(", ")}
+                </td>
+                <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
+                  {order.userId}
                 </td>
               </tr>
             );

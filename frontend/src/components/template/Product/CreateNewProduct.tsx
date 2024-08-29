@@ -38,7 +38,7 @@ export function CreateNewProduct() {
         return err.response.data;
       });
     if (msgType == "success") {
-      setFlashMessage(data.message, msgType);
+      setFlashMessage("Produto criado com sucesso!", msgType);
     } else {
       const parsedData = JSON.parse(data.message);
 
@@ -54,7 +54,7 @@ export function CreateNewProduct() {
         onSubmit={handleCreateProduct}
         className="flex flex-1 flex-col gap-2 border-2 bg-slate-200 rounded-lg px-4 pt-6 pb-4 mb-4"
       >
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Nome:
             <Input type="text" name="name" id="name" />
