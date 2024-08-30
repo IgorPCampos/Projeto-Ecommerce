@@ -12,11 +12,6 @@ export function CreateNewProduct() {
 
   async function handleCreateProduct(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(
-      products.map((product1, index) => {
-        console.log(product1);
-      })
-    );
 
     const formData = new FormData(event.currentTarget);
 
@@ -57,15 +52,15 @@ export function CreateNewProduct() {
         <div className="flex flex-col gap-3">
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Nome:
-            <Input type="text" name="name" id="name" />
+            <Input type="text" name="name" id="name" required/>
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Preço:
-            <Input type="number" name="price" id="price" />
+            <Input type="number" name="price" id="price" required/>
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Descrição:
-            <Input type="text" name="description" id="description" />
+            <Input type="text" name="description" id="description" required/>
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Quantidade:

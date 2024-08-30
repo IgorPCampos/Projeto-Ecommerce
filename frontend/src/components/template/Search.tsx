@@ -7,21 +7,20 @@ interface Product {
     name: string;
     description: string;
     price: number;
-    // Outras propriedades dos produtos, se houver
 }
 
 function Search() {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<any[]>([]);
     const [showOptions, setShowOptions] = useState(true);
-    const { produtos } = showInformations();
+    const { products } = showInformations();
     const router = useRouter();
 
     const handleSearch = (e: any) => {
         const searchTerm = e.target.value;
         setQuery(searchTerm);
     
-        const matchingProducts = produtos.filter((produto: Product) =>
+        const matchingProducts = products.filter((produto: Product) =>
             produto.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
     
@@ -40,7 +39,6 @@ function Search() {
     };
 
     const handleItemClick = (name: string) => {
-        console.log(name)
         router.push(`/AllProductByName/${name}`);
     };
 

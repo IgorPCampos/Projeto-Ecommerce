@@ -49,7 +49,7 @@ export default function SelectProducts() {
           <select
             name={`productId`}
             id={`productId`}
-            className="rounded border-gray-400 bg-gray-600 text-white"
+            className="rounded border-gray-400 bg-white text-black"
             value={selection.productId}
             onChange={(e) => updateProductSelection(index, Number(e.target.value), selection.quantity)}
           >
@@ -70,7 +70,7 @@ export default function SelectProducts() {
                 value={selection.quantity}
                 min="1"
                 max={selection.maxQuantity}
-                className="rounded border-gray-400 bg-gray-600 text-white ml-2"
+                className="rounded border-gray-400 bg-white text-black ml-2"
                 onChange={(e) => updateProductSelection(index, selection.productId, Number(e.target.value))}
               />
               <span className="ml-2 text-gray-600">Disponível: {selection.maxQuantity}</span>
@@ -89,8 +89,8 @@ export default function SelectProducts() {
           )}
         </div>
       ))}
-      <div className="mt-4">
-        <h2 className="ml-2 text-gray-800">Preço Total: R$ {totalPrice.toFixed(2)}</h2>
+      <div >
+        <h2 className="ml-0 text-gray-800">Preço Total: R$ {totalPrice.toFixed(2)}</h2>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import SelectProducts from "./SelectProducts";
 
 export function CreateNewOrder() {
   const { setFlashMessage } = useFlashMessage();
-  const { orders, products, loadOrders } = showInformation();
+  const { orders, products, loadOrders, users } = showInformation();
 
   async function handleCreateOrder(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -16,19 +16,12 @@ export function CreateNewOrder() {
     const formData = new FormData(event.currentTarget);
     let msgType = "success";
 
-    // Log para depuração de formData
-    console.log("Form Data Entries:", Array.from(formData.entries()));
-
-    // Construir o array orderItems com productId e quantity
     const orderItems = Array.from(formData.getAll("productId"))
       .map((productId, index) => ({
         productId: Number(productId),
         quantity: Number(formData.getAll("quantity")[index]),
       }))
       .filter((item) => item.productId && item.quantity);
-
-    // Log para depuração de orderItems
-    console.log("Order Items:", orderItems);
 
     try {
       const response = await api.post(`/orders/3`, {
@@ -70,12 +63,12 @@ export function CreateNewOrder() {
             className="items-center gap-1.5 text-gray-900"
           >
             Método de Pagamento:
-            <Input
-              type="text"
-              name="paymentMethod"
-              id="paymentMethod"
-              required
-            />
+            <select name="paymentMethod" id="paymentMethod" required className="items-center gap-1.5 text-gray-900">
+              <option value="Credit Card">Cartão de Crédito</option>
+              <option value="Debit Card">Cartão de Débito</option>
+              <option value="Pix">Pix</option>
+              <option value="Boleto">Boleto</option>
+            </select>
           </label>
 
           <SelectProducts />
@@ -96,8 +89,6 @@ export function CreateNewOrder() {
         </thead>
         <tbody>
           {orders.map((order, index) => {
-            products.find((prod) => prod.id === order.productId);
-
             return (
               <tr
                 key={index}
@@ -115,7 +106,7 @@ export function CreateNewOrder() {
                 </td>
                 <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                   {order.total}
-                </td>   
+                </td>
                 <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
                   {order.orderItems
                     .map((product: any) => {
@@ -129,7 +120,7 @@ export function CreateNewOrder() {
                     .join(", ")}
                 </td>
                 <td className="py-3 px-2 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                  {order.userId}
+                  {users.find((user) => user.id === order.userId)?.name || "Usuário desconhecido"}
                 </td>
               </tr>
             );

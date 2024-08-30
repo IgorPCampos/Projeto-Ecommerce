@@ -2,33 +2,44 @@ import { useState, useEffect } from "react";
 import { api } from "./api";
 
 export default function showInformations() {
-  const [categories, setcategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
 
   async function loadCategories() {
     try {
       const categoria = await api.get("/categories");
-      setcategories(categoria.data);
+      setCategories(categoria.data);
     } catch (error) {
       console.error("Erro ao buscar categories:", error);
     }
   }
-  const [products, setproducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
 
   async function loadProducts() {
     try {
       const respProd = await api.get("/products");
-      setproducts(respProd.data);
+      setProducts(respProd.data);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const [orders, setorders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<any[]>([]);
 
   async function loadOrders() {
     try {
       const respProd = await api.get("/orders");
-      setorders(respProd.data);
+      setOrders(respProd.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const [users, setUsers] = useState<any[]>([]);
+
+  async function loadUsers() {
+    try {
+      const respProd = await api.get("/users");
+      setUsers(respProd.data);
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +49,17 @@ export default function showInformations() {
     loadCategories();
     loadProducts();
     loadOrders();
+    loadUsers();
   }, []);
 
-  return { categories, loadCategories, products, loadProducts, orders, loadOrders };
+  return {
+    categories,
+    loadCategories,
+    products,
+    loadProducts,
+    orders,
+    loadOrders,
+    users,
+    loadUsers,
+  };
 }

@@ -23,11 +23,11 @@ export default function Selectcategories() {
     <div className="flex flex-row gap-2">
       {Array.from({ length: categorySelections }).map((_, index) => (
         <div key={index} className="flex items-center gap-1.5">
-          <h2 className="text-gray-900">Categoria {index + 1}:</h2>
+          <h2 className="text-gray-900">Categorias:</h2>
           <select
             name={`categoryId`}
             id={`categoryId`}
-            className="rounded border-gray-400 bg-gray-600 text-white"
+            className="rounded border-gray-400 bg-white text-black"
           >
             {categories.map((categoria) => (
               <option key={categoria.id} value={categoria.id}>
