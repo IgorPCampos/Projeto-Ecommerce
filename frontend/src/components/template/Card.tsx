@@ -62,7 +62,7 @@ export default function Card() {
 
     return (
         <div className="flex flex-row">
-            <Link href={"/produto"}>
+            <Link href={"/product"}>
                 <div className="max-w-sm rounded overflow-hidden shadow-lg bg-blue-400 cursor-pointer mr-6">
                     <div className="px-6 py-4">
                         <div className="font-bold text-xl mb-2">Produtos</div>
@@ -77,7 +77,7 @@ export default function Card() {
                     </div>
                 </div>
             </Link>
-            <Link href={"/categoria"}>
+            <Link href={"/category"}>
                 <div className="max-w-sm rounded overflow-hidden shadow-lg bg-blue-400 cursor-pointer mr-6">
                     <div className="px-6 py-4">
                         <div className="font-bold text-xl mb-2">Categorias</div>
@@ -92,7 +92,7 @@ export default function Card() {
                     </div>
                 </div>
             </Link>
-            <Link href={"/pedido"}>
+            <Link href={"/order"}>
                 <div className="max-w-sm rounded overflow-hidden shadow-lg bg-blue-400 cursor-pointer mr-6">
                     <div className="px-6 py-4">
                         <div className="font-bold text-xl mb-2">Pedidos</div>
@@ -107,7 +107,7 @@ export default function Card() {
                     </div>
                 </div>
             </Link>
-            <Link href={"/usuario"}>
+            <Link href={"/user"}>
                 <div className="max-w-sm rounded overflow-hidden shadow-lg bg-blue-400 cursor-pointer">
                     <div className="px-6 py-4">
                         <div className="font-bold text-xl mb-2">Usuários</div>

@@ -8,7 +8,7 @@ export default function MenuLateral() {
   
     function logout() {
         localStorage.removeItem('token')
-        router.push('/autenticacao')
+        router.push('/authentication')
     }
 
     return (
@@ -18,9 +18,9 @@ export default function MenuLateral() {
             </div>
             <ul className="flex-grow">
                 <MenuItem url="/" texto="Inicio" icone={Home} />
-                <MenuItem url="/produto" texto="Produto" icone={Configuracoes} />
-                <MenuItem url="/categoria" texto="Categoria" icone={Sino} />
-                <MenuItem url="/pedido" texto="Pedido" icone={Sino} />
+                <MenuItem url="/product" texto="Produto" icone={Configuracoes} />
+                <MenuItem url="/category" texto="Categoria" icone={Sino} />
+                <MenuItem url="/order" texto="Pedido" icone={Sino} />
             </ul>
             <ul>
                 <MenuItem onClick={logout} texto="Sair" icone={Sair} className={'text-red-600 hover:bg-red-500 hover:text-white'} />

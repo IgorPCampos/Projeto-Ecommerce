@@ -58,7 +58,7 @@ function Search() {
                     <ul className="w-full absolute left-0 bg-white border border-gray-300 z-10 shadow-md rounded-lg">
                         {results.map((result, index) => (
                             <li key={index}
-                                className="py-1 border-b border-gray-300 transition-colors hover:bg-gray-100 block pl-1"
+                                className="py-1 border-b border-gray-300 transition-colors hover:bg-gray-100 block pl-1 text-black"
                                 onClick={() => handleItemClick(result.name)}
                             >
                                 {result.name}

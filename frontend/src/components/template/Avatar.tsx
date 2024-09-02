@@ -26,14 +26,14 @@ export default function Avatar() {
                     <div className="absolute top-12 right-0 bg-white border rounded-lg shadow-md">
                         <ul>
                             <li>
-                                <Link href="/perfil" className="flex hover:bg-slate-200">
+                                <Link href="/authentication" className="flex hover:bg-slate-200 text-black">
                                     {Usuario}
                                     <p className="pl-1 mr-1">Perfil</p>
                                     
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/logout" className="flex hover:bg-slate-200">
+                                <Link href="/logout" className="flex hover:bg-slate-200 text-black">
                                     {Sair}
                                     <p className="pl-1">Sair</p>
                                 </Link>
