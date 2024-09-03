@@ -1,20 +1,47 @@
-import { useEffect } from "react";
-import showInformations from "../lib/showInformations";
+import { useState, useEffect } from "react";
 import Logo from "../components/template/Logo";
 import Search from "../components/template/Search";
 import Avatar from "../components/template/Avatar";
 import Link from "next/link";
+import axios from "axios";
+
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  quantity: number;
+  image?: string;
+};
 
 export default function Home() {
-  const { products, categories, loadProducts } = showInformations();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
+
+  const fetchProducts = async (categoryName: string) => {
+    try {
+      let response;
+
+      if (categoryName === "Todos") {
+        response = await axios.get("http://localhost:3333/products/latest");
+      } else {
+        response = await axios.get(
+          `http://localhost:3333/products/name/${categoryName}`
+        );
+      }
+
+      setProducts(response.data);
+    } catch (error) {
+      console.error("Failed to fetch products", error);
+    }
+  };
 
   useEffect(() => {
-    loadProducts(); // Carregar os produtos ao iniciar
-  }, []);
+    fetchProducts(selectedCategory);
+  }, [selectedCategory]);
 
   return (
     <div className="bg-gray-100">
-      {/* Cabeçalho */}
       <header className="bg-blue-700 text-white">
         <div className="container mx-auto flex items-center justify-between p-4">
           <Logo />
@@ -27,42 +54,57 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Navegação Principal */}
-      <nav className="bg-blue-700 text-white py-2">
+      <nav className="bg-blue-700 text-white py-2 cursor-pointer">
         <div className="container mx-auto flex space-x-4">
-          <a href="#" className="hover:underline">
+          <a
+            className="hover:text-gray-200"
+            onClick={() => setSelectedCategory("Todos")}
+          >
             Todos os departamentos
           </a>
-          <a href="#" className="hover:underline">
+          <a
+            className="hover:text-gray-200"
+            onClick={() => setSelectedCategory("Celulares")}
+          >
             Celulares
           </a>
-          <a href="#" className="hover:underline">
+          <a
+            className="hover:text-gray-200"
+            onClick={() => setSelectedCategory("Eletrodomésticos")}
+          >
             Eletrodomésticos
           </a>
-          <a href="#" className="hover:underline">
-            TVs e Vídeo
+          <a
+            className="hover:text-gray-200"
+            onClick={() => setSelectedCategory("Móveis")}
+          >
+            Móveis
           </a>
-          <a href="#" className="hover:underline">
+          <a
+            className="hover:text-gray-200"
+            onClick={() => setSelectedCategory("Informática")}
+          >
             Informática
           </a>
         </div>
       </nav>
 
-      {/* Produtos Recentes */}
       <section className="bg-slate py-8">
         <div className="container mx-auto">
           <h2 className="text-2xl font-bold text-center mb-6">
-            Últimos Produtos Cadastrados
+            {selectedCategory === "Todos"
+              ? "Últimos Produtos Cadastrados"
+              : `Produtos de ${selectedCategory}`}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.slice(0, 8).map((product) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-2">
+            {products.map((product) => (
               <Link
                 href={`/specificProduct/${product.id}`}
                 key={product.id}
                 className="bg-white border border-gray-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
               >
                 <img
-                  src={product.imageUrl}
+                  src={product.image}
                   alt={product.name}
                   className="w-full h-48 object-cover rounded-t-lg"
                 />
@@ -71,11 +113,6 @@ export default function Home() {
                     {product.name}
                   </h3>
                   <p className="text-gray-600 mt-1">{product.description}</p>
-                  <div className="mt-2 flex items-center justify-between">
-                    <span className="text-gray-900 font-bold">
-                      R$ {product.price.toFixed(2)}
-                    </span>
-                  </div>
                   <div className="mt-2 text-sm text-gray-500">
                     Estoque: {product.quantity} unidades
                   </div>
@@ -85,13 +122,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Rodapé */}
-      <footer className="bg-blue-800 text-white py-6">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 Minha Loja - Todos os direitos reservados</p>
-        </div>
-      </footer>
     </div>
   );
 }
