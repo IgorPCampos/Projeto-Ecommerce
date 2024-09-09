@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Configuracoes, Home, Sair, Sino } from "../icons";
+import { Configuracoes, Home, Sair, Sino } from "../../../public/icons";
 import Logo from "./Logo";
 import MenuItem from "./MenuItem";
 

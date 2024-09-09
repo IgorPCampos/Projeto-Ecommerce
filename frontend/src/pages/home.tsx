@@ -11,34 +11,56 @@ type Product = {
   price: number;
   description: string;
   quantity: number;
-  image?: string;
+  imageId?: number;
+};
+
+type File = {
+  id: number;
+  path: string;
+  productId: number;
 };
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [files, setFiles] = useState<File[]>([]); 
   const [selectedCategory, setSelectedCategory] = useState("Todos");
 
   const fetchProducts = async (categoryName: string) => {
     try {
       let response;
-
       if (categoryName === "Todos") {
-        response = await axios.get("http://localhost:3333/products/latest");
+        response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/latest`
+        );
       } else {
         response = await axios.get(
-          `http://localhost:3333/products/name/${categoryName}`
+          `${process.env.NEXT_PUBLIC_API_URL}/products/name/${categoryName}`
         );
       }
-
       setProducts(response.data);
     } catch (error) {
       console.error("Failed to fetch products", error);
     }
   };
 
+  const fetchFiles = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/files`);
+      setFiles(response.data);
+    } catch (error) {
+      console.error("Failed to fetch files", error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts(selectedCategory);
+    fetchFiles(); 
   }, [selectedCategory]);
+
+  const getProductImagePath = (imageId: number | undefined) => {
+    const file = files.find((file) => file.id === imageId);
+    return file ? `${process.env.NEXT_PUBLIC_API_URL}${file.path}` : "/images/no-image.png"; 
+  };
 
   return (
     <div className="bg-gray-100">
@@ -104,7 +126,7 @@ export default function Home() {
                 className="bg-white border border-gray-200 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
               >
                 <img
-                  src={product.image}
+                  src={getProductImagePath(product.imageId)} 
                   alt={product.name}
                   className="w-full h-48 object-cover rounded-t-lg"
                 />

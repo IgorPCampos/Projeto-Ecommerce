@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Mais, Lixo } from "@/components/icons";
+import { Mais, Lixo } from "../../../../public/icons";
 import showInformation from "../../../lib/showInformations";
 
 export default function SelectProducts() {
