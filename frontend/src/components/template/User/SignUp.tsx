@@ -1,91 +1,130 @@
-import { useState } from "react";
+import axios from "axios";
+import { FormEvent, useState } from "react";
+import Input from "../Input";
+import CreateButton from "../CreateButton";
 
 export default function SignUp() {
   const [accountType, setAccountType] = useState("Pessoa Física");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [feedbackType, setFeedbackType] = useState("");
 
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Cadastro", { accountType, name, email, password });
-  };
+  async function handleCreateUser(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+    setFeedbackMessage("");
+    setFeedbackType("");
+
+    const payload: any = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    if (accountType === "Pessoa Jurídica") {
+      payload.role = 2;
+    }
+
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/users`,
+        payload
+      );
+
+      setFeedbackMessage("Conta criada com sucesso!");
+      setFeedbackType("success");
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || "Ocorreu um erro";
+      setFeedbackMessage(errorMessage);
+      setFeedbackType("error");
+    }
+  }
 
   return (
     <div className="bg-white p-8 rounded-lg w-full max-w-md">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
         Cadastro
       </h2>
-      <form onSubmit={handleSignup}>
+
+      {feedbackMessage && (
+        <div
+          className={`mb-4 p-4 rounded-lg ${
+            feedbackType === "success"
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
+          }`}
+        >
+          {feedbackMessage}
+        </div>
+      )}
+
+      <form onSubmit={handleCreateUser}>
         {accountType === "Pessoa Física" && (
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="name"
+            >
               Nome
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring"
-              id="name"
+            <Input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Digite seu nome"
+              name="name"
+              id="name"
+              placeholder="Digite o seu nome"
+              required
             />
           </div>
         )}
 
         {accountType === "Pessoa Jurídica" && (
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="razaoSocial">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="razaoSocial"
+            >
               Razão Social
             </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring"
-              id="razaoSocial"
+            <Input
               type="text"
-              placeholder="Digite a Razão Social"
+              name="name"
+              id="name"
+              placeholder="Digite a razão social"
+              required
             />
           </div>
         )}
 
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="email"
+          >
             Email
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring"
-            id="email"
+          <Input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Digite seu email"
+            name="email"
+            id="email"
+            placeholder="Digite o seu email"
+            required
           />
         </div>
 
-        {accountType === "Pessoa Jurídica" && (
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cnpj">
-              CNPJ
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring"
-              id="cnpj"
-              type="text"
-              placeholder="Digite o CNPJ"
-            />
-          </div>
-        )}
-
         <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="password"
+          >
             Senha
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring"
-            id="password"
+          <Input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Digite sua senha"
+            name="password"
+            id="password"
+            placeholder="Digite a sua senha"
+            required
           />
         </div>
 
@@ -120,12 +159,7 @@ export default function SignUp() {
         </div>
 
         <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Criar Conta
-          </button>
+          <CreateButton text="Criar Conta" type="submit"/>
         </div>
       </form>
     </div>

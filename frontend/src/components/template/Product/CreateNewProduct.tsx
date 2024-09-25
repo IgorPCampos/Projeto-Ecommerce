@@ -96,19 +96,19 @@ export function CreateNewProduct() {
         <div className="flex flex-col gap-3">
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Nome:
-            <Input type="text" name="name" id="name" required />
+            <Input type="text" name="name" id="name" placeholder="Digite o nome do Produto" required />
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Preço:
-            <Input type="number" name="price" id="price" required />
+            <Input type="number" name="price" id="price"placeholder="Digite o preço do Produto" required />
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Descrição:
-            <Input type="text" name="description" id="description" required />
+            <Input type="text" name="description" id="description" placeholder="Digite a descrição do Produto" required />
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Quantidade:
-            <Input type="number" name="quantity" id="quantity" required />
+            <Input type="number" name="quantity" id="quantity" placeholder="Digite a quantidade do Produto" required />
           </label>
           <label htmlFor="image" className="items-center gap-1.5 text-gray-900">
             Imagem do Produto:

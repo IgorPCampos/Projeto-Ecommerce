@@ -2,7 +2,7 @@ import { useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp"; 
 
-export default function Auth() {
+export function Auth() {
   const [showLogin, setShowLogin] = useState(true);
 
   return (

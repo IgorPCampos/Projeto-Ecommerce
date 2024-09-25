@@ -1,10 +1,10 @@
 interface ButtonProps {
     type: 'submit'
-    texto: string
+    text: string
 }
 
 export default function CreateButton(props: ButtonProps) {
     return (
-        <button type={props.type} className='inline-block rounded-full bg-blue-700 px-5 py-3 self-start font-alt text-sm uppercase leading-none text-black hover:bg-blue-600'>{props.texto}</button>
+        <button type={props.type} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>{props.text}</button>
     )
 }
