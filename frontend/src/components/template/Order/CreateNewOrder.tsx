@@ -74,7 +74,7 @@ export function CreateNewOrder() {
           <SelectProducts />
         </div>
 
-        <CreateButton type="submit" texto="Criar" />
+        <CreateButton type="submit" text="Criar" />
       </form>
 
       <table className="min-w-full table-auto border border-gray-400">

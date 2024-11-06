@@ -2,26 +2,29 @@ import axios from "axios";
 import { FormEvent, useState } from "react";
 import CreateButton from "../CreateButton";
 import Input from "../Input";
+import { useRouter } from "next/router";
 
 export default function SignIn() {
+  const router = useRouter();
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [feedbackType, setFeedbackType] = useState("");
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    
-    const formData = new FormData(event.currentTarget);
 
+    const formData = new FormData(event.currentTarget);
     setFeedbackMessage("");
     setFeedbackType("");
-
     try {
-      
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-        email: formData.get("email"),
-        password: formData.get("password"),
-      });
-      
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          email: formData.get("email"),
+          password: formData.get("password"),
+        },
+        { withCredentials: true }
+      );
+      router.push("/");
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "Ocorreu um erro";
       setFeedbackMessage(errorMessage);

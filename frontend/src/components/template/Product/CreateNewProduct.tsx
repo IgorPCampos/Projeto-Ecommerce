@@ -16,12 +16,14 @@ export function CreateNewProduct() {
   const { setFlashMessage } = useFlashMessage();
   const { products, categories, loadProducts } = showInformation();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [files, setFiles] = useState<File[]>([]); 
+  const [files, setFiles] = useState<File[]>([]);
 
   useEffect(() => {
     async function fetchFiles() {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/files`);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/files`
+        );
         setFiles(response.data);
       } catch (error) {
         console.error("Erro ao carregar arquivos", error);
@@ -39,13 +41,17 @@ export function CreateNewProduct() {
     let msgType = "success";
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
-        name: formData.get("name"),
-        price: Number(formData.get("price")),
-        description: formData.get("description"),
-        quantity: Number(formData.get("quantity")),
-        categories: Array.from(formData.getAll("categoryId")).map(Number),
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/products`,
+        {
+          name: formData.get("name"),
+          price: Number(formData.get("price")),
+          description: formData.get("description"),
+          quantity: Number(formData.get("quantity")),
+          categories: Array.from(formData.getAll("categoryId")).map(Number),
+        },
+        { withCredentials: true }
+      );
 
       const productId = response.data.id;
       const image = formData.get("image");
@@ -55,7 +61,7 @@ export function CreateNewProduct() {
         imageFormData.append("file", image);
 
         await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/${productId}/upload`,
+          `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/upload`,
           imageFormData,
           {
             headers: {
@@ -96,19 +102,43 @@ export function CreateNewProduct() {
         <div className="flex flex-col gap-3">
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Nome:
-            <Input type="text" name="name" id="name" placeholder="Digite o nome do Produto" required />
+            <Input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Digite o nome do Produto"
+              required
+            />
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Preço:
-            <Input type="number" name="price" id="price"placeholder="Digite o preço do Produto" required />
+            <Input
+              type="number"
+              name="price"
+              id="price"
+              placeholder="Digite o preço do Produto"
+              required
+            />
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Descrição:
-            <Input type="text" name="description" id="description" placeholder="Digite a descrição do Produto" required />
+            <Input
+              type="text"
+              name="description"
+              id="description"
+              placeholder="Digite a descrição do Produto"
+              required
+            />
           </label>
           <label htmlFor="" className="items-center gap-1.5 text-gray-900">
             Quantidade:
-            <Input type="number" name="quantity" id="quantity" placeholder="Digite a quantidade do Produto" required />
+            <Input
+              type="number"
+              name="quantity"
+              id="quantity"
+              placeholder="Digite a quantidade do Produto"
+              required
+            />
           </label>
           <label htmlFor="image" className="items-center gap-1.5 text-gray-900">
             Imagem do Produto:
@@ -136,7 +166,7 @@ export function CreateNewProduct() {
           <SelectCategorias />
         </div>
 
-        <CreateButton type="submit" texto="Criar" />
+        <CreateButton type="submit" text="Criar" />
       </form>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -152,8 +182,8 @@ export function CreateNewProduct() {
             })
             .join(", ");
 
-          const productImage = getProductImage(product.imageId); 
-
+          const productImage = getProductImage(product.fileId);
+            
           return (
             <div
               key={index}

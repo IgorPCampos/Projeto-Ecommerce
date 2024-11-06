@@ -44,7 +44,7 @@ export default function CreateNewCategory() {
                         <Input type="text" name="name" id="name" required/>
                     </label>
                 </div>
-                <CreateButton type="submit" texto="Criar" />
+                <CreateButton type="submit" text="Criar" />
             </form>
             
             <div className="overflow-x-hidden">
