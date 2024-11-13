@@ -2,7 +2,6 @@ import Header from "./Header"
 import Content from "./Content"
 import MenuLateral from "./MenuLateral"
 import Message from "./Message"
-// import ProtegerRotas from '../auth/ProtegerRotas'
 
 interface LayoutProps {
     title: string

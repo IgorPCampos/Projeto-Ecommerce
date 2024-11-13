@@ -22,7 +22,7 @@ export default function MenuLateral() {
         <Logo />
       </div>
       <ul className="flex-grow">
-        <MenuItem url="/" texto="Inicio" icone={Home} />
+        <MenuItem url="/dashboard" texto="Inicio" icone={Home} />
         <MenuItem url="/product" texto="Produto" icone={Configuracoes} />
         <MenuItem url="/category" texto="Categoria" icone={Sino} />
         <MenuItem url="/order" texto="Pedido" icone={Sino} />
