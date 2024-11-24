@@ -1,40 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Ecom - Loja Online
 
-First, run the development server:
+Descrição do projeto: Desenvolvimento de um e-commerce com cadastro de usuários, produtos, carrinho de compras e tela de administrador.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Tecnologias utilizadas: React, Tailwind, Next.js, Node.js, Express, Nest.js, Prisma, SQLite, Typescript
+
+Entregas no 1º Bimestre
+Setup back-end (2 pontos): setup completo localmente do backend do projeto.
+Autenticação de Usua=ário (2 pontos): criando a autencicação de usuários com base no seu cargo requisições via API.
+Teste de API com Postman (2 pontos): criação e teste das API que serão utilizadas no projeto.
+Criando o Banco de Dados (Prisma e SQLite) (2 pontos): criação e teste do Banco de Dados para o projeto.
+CRUD completo (2 pontos): criação no back-end das rotas necessárias para o uso de CRUD no banco de dados via API.
+
+
+Entregas no 2º Bimestre 
+Criando a homepage (2 pontos): desenvolvimento da página inicial usando React e Next.
+Criando as páginas adminnistrativas (2 pontos): desenvolvimento da as páginas adminnistrativas usando React e Next.
+Login do usuário (2 pontos): criando login do usuário e autenticação
+Autenticação das páginas com base no cargo do usuário (2 pontos): Autenticação de usuário serve-side e colocando nas páginas necessárias
+Filtros no front (2 pontos): criando filtro de produtos na página.
+
+
+
+## Instalação
+
+
 ```
+  npm i 
+  npm run dev
+```
+    
+## Documentação Rotas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Product
+[Documentação](https://documenter.getpostman.com/view/26201904/2sAYBUDY4X)
+Auth
+[Documentação](https://documenter.getpostman.com/view/26201904/2sAYBUDY4Y)
+User
+[Documentação](https://documenter.getpostman.com/view/26201904/2sAYBUDY8o)
+Order
+[Documentação](https://documenter.getpostman.com/view/26201904/2sAYBUDY8p)
+Category
+[Documentação](https://documenter.getpostman.com/view/26201904/2sAYBUDY8q)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
